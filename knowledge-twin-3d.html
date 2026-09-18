@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Knowledge Twin - KnowledgeDecay AI</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/knowledge-twin-3d.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Three.js + OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Tween.js for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+</head>
+<body>
+    
+    <div class="threed-container" id="canvas-container">
+        <!-- WebGL Canvas injected here by Three.js -->
+    </div>
+
+    <!-- UI Overlay Layer -->
+    <div class="ui-layer">
+        
+        <div class="top-header">
+            <a href="knowledge-twin.html" class="back-btn"><i data-lucide="arrow-left"></i> Back to 2D</a>
+            
+            <div class="ui-panel stats-panel" id="stats-panel">
+                <div class="sp-title">KNOWLEDGE TWIN</div>
+                <div class="sp-subtitle" id="stats-total">0 Concepts</div>
+                
+                <div class="sp-stats">
+                    <div class="sp-stat">
+                        <span class="sp-stat-val" id="stats-mastery">0%</span>
+                        <span class="sp-stat-lbl">Mastery</span>
+                    </div>
+                </div>
+                
+                <div class="sp-legend">
+                    <div class="legend-item"><div class="legend-dot" style="background: var(--status-green);"></div> <span id="stats-strong">0 Strong</span></div>
+                    <div class="legend-item"><div class="legend-dot" style="background: var(--status-amber);"></div> <span id="stats-fading">0 Fading</span></div>
+                    <div class="legend-item"><div class="legend-dot" style="background: #F97316;"></div> <span id="stats-fragile">0 Fragile</span></div>
+                    <div class="legend-item"><div class="legend-dot" style="background: var(--status-red);"></div> <span id="stats-critical">0 Critical</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-controls">
+            <button class="control-btn" id="btn-reset-view" title="Reset View"><i data-lucide="camera-reset"></i> <span>Reset View</span></button>
+            <button class="control-btn" id="btn-focus-weak" title="Focus Weak Knowledge"><i data-lucide="focus"></i> <span>Focus Weak Knowledge</span></button>
+            <button class="control-btn" id="btn-show-decay" title="Show Decay Prediction"><i data-lucide="fast-forward"></i> <span>Show Decay</span></button>
+        </div>
+        
+        <!-- Detail Panel (Side) -->
+        <div class="ui-panel" id="detail-panel">
+            <div class="dp-header">
+                <div>
+                    <div class="text-muted text-sm" id="dp-subject">Subject</div>
+                    <h2 style="font-size: 1.25rem; font-weight: 700;" id="dp-title">Concept Name</h2>
+                </div>
+                <button class="dp-close" id="dp-close"><i data-lucide="x"></i></button>
+            </div>
+            
+            <div class="dp-section">
+                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                    <div class="badge" id="dp-state-badge">STATE</div>
+                    <div class="badge badge-amber" id="dp-prediction-badge" style="display: none;">Prediction Mode</div>
+                </div>
+                
+                <div class="dp-metrics">
+                    <div class="dp-metric">
+                        <span class="text-muted">Mastery</span>
+                        <span class="font-bold" id="dp-mastery">0%</span>
+                    </div>
+                    <div class="dp-metric">
+                        <span class="text-muted">Risk</span>
+                        <span class="font-bold" id="dp-risk">0%</span>
+                    </div>
+                    <div class="dp-metric">
+                        <span class="text-muted">Retention</span>
+                        <span class="font-bold" id="dp-retention">0%</span>
+                    </div>
+                    <div class="dp-metric">
+                        <span class="text-muted">Confidence</span>
+                        <span class="font-bold" id="dp-confidence">0%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dp-section">
+                <div class="dp-section-title">Why this state?</div>
+                <div class="dp-reason" id="dp-reason" style="padding: 16px;">
+                    <ul id="dp-diagnostic-list" style="margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.5; display: flex; flex-direction: column; gap: 8px;">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="dp-section">
+                <div class="dp-section-title">Knowledge Timeline</div>
+                <div id="dp-timeline" style="display: flex; flex-direction: column; gap: 8px;">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            
+            <div class="dp-section" style="margin-top: auto;">
+                <div class="dp-section-title">Intervention</div>
+                <div style="font-weight: 600; margin-bottom: 4px;" id="dp-intervention-title">Title</div>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 16px;" id="dp-intervention-desc">Desc</p>
+                <a href="#" id="dp-quiz-link" class="btn btn-primary" style="width: 100%;">START INTERVENTION</a>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <!-- Hover Tooltip -->
+    <div id="tooltip">
+        <div class="tt-subject" id="tt-subject">Subject</div>
+        <div class="tt-title" id="tt-title">Concept</div>
+        <div class="tt-row"><span class="text-muted">Mastery</span><span class="font-bold" id="tt-mastery">0%</span></div>
+        <div class="tt-row"><span class="text-muted">Retention</span><span class="font-bold" id="tt-retention">0%</span></div>
+        <div class="tt-row"><span class="text-muted">Risk</span><span class="font-bold" id="tt-risk">0%</span></div>
+        <div class="tt-row" style="margin-top: 8px;"><div class="badge" id="tt-state" style="font-size: 0.7rem;">STATE</div></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/state.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/knowledge-twin-3d.js"></script>
+</body>
+</html>

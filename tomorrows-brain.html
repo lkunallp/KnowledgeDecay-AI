@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomorrow's Brain - KnowledgeDecay AI</title>
+    <link rel="stylesheet" href="css/global.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .page-header {
+            margin-bottom: 32px;
+        }
+        .tb-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .concept-card {
+            display: flex;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius-md);
+            border-left-width: 6px;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.04);
+        }
+        
+        .cc-critical { border-left-color: var(--status-red); }
+        .cc-warning { border-left-color: var(--status-amber); }
+        .cc-good { border-left-color: var(--status-green); }
+        
+        .cc-main {
+            flex: 1;
+            padding: 24px;
+        }
+        .cc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .cc-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .cc-stats {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+        .cc-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .cc-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cc-stat-val {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .cc-reason {
+            padding: 16px;
+            background: rgba(0,0,0,0.2);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        
+        .cc-actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(255,255,255,0.01);
+            border-left: 1px solid var(--card-border);
+            min-width: 240px;
+        }
+        
+        .cc-time-rec {
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .concept-card { flex-direction: column; }
+            .cc-stats { flex-wrap: wrap; }
+            .cc-actions { border-left: none; border-top: 1px solid var(--card-border); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Desktop Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i data-lucide="brain-circuit" class="brand-icon"></i>
+                KnowledgeDecay
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="dashboard.html"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="subjects.html"><i data-lucide="book-open"></i> Subjects</a></li>
+                <li class="nav-item"><a href="quiz.html"><i data-lucide="zap"></i> Quiz</a></li>
+                <li class="nav-item"><a href="knowledge-twin.html"><i data-lucide="orbit"></i> Knowledge Twin</a></li>
+                <li class="nav-item"><a href="tomorrows-brain.html" class="active"><i data-lucide="calendar-clock"></i> Tomorrow's Brain</a></li>
+                <li class="nav-item"><a href="analytics.html"><i data-lucide="bar-chart-2"></i> Analytics</a></li>
+                <li class="nav-item"><a href="settings.html"><i data-lucide="settings"></i> Settings</a></li>
+                <li class="nav-item" style="margin-top: 16px;">
+                    <a href="#" onclick="if(window.StateManager) window.StateManager.resetDemoState(); window.location.reload(); return false;" style="color: var(--status-amber);">
+                        <i data-lucide="refresh-cw"></i> Reset Demo Data
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="greeting">Tomorrow's Brain</h1>
+                <p class="subtitle">What your current learning behaviour suggests you may struggle with next.</p>
+            </div>
+            
+            <div class="tb-grid" id="tb-dynamic-list">
+                <!-- Dynamically populated by JS based on forgetting risk -->
+            </div>
+        </main>
+    </div>
+    
+    <script src="data/knowledgeTwinData.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tomorrows-brain.js"></script>
+</body>
+</html>

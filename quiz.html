@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - KnowledgeDecay AI</title>
+    <link rel="stylesheet" href="css/global.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .timer {
+            font-family: monospace;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            margin-bottom: 32px;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius-md);
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option.selected .option-marker {
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+        }
+
+        .confidence-section {
+            border-top: 1px solid var(--card-border);
+            padding-top: 32px;
+        }
+
+        .confidence-label {
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .confidence-scale {
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .conf-btn {
+            flex: 1;
+            padding: 12px 0;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .conf-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .conf-btn.selected {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <main class="main-content" style="margin-left: 0; padding-top: 0; max-width: 100%;">
+
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div>
+                        <div class="text-muted text-sm" style="margin-bottom: 4px;">DBMS &mdash; Normalization</div>
+                        <h2 style="font-size: 1.25rem;">Question 1 of 10</h2>
+                    </div>
+                    <div class="timer" id="timer">00:00</div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-text">
+                        Which normal form is concerned with eliminating transitive dependencies?
+                    </div>
+
+                    <div class="options-list">
+                        <div class="option">
+                            <div class="option-marker"></div>
+                            <span>First Normal Form (1NF)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-marker"></div>
+                            <span>Second Normal Form (2NF)</span>
+                        </div>
+                        <div class="option selected">
+                            <div class="option-marker"><i data-lucide="check"
+                                    style="color: white; width: 14px; height: 14px;"></i></div>
+                            <span>Third Normal Form (3NF)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-marker"></div>
+                            <span>Boyce-Codd Normal Form (BCNF)</span>
+                        </div>
+                    </div>
+
+                    <div class="confidence-section">
+                        <span class="confidence-label">How confident are you in this answer?</span>
+                        <div class="confidence-scale">
+                            <div class="conf-btn">20%</div>
+                            <div class="conf-btn">40%</div>
+                            <div class="conf-btn">60%</div>
+                            <div class="conf-btn selected">80%</div>
+                            <div class="conf-btn">100%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-actions">
+                    <a href="result.html" class="btn btn-primary" style="padding: 12px 32px; font-size: 1rem;">Submit
+                        Answer</a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Simple timer simulation for response time
+        let seconds = 0;
+        const timerEl = document.getElementById('timer');
+        setInterval(() => {
+            seconds++;
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${m}:${s}`;
+        }, 1000);
+
+        // Mock selection logic for UI
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.option').forEach(o => {
+                    o.classList.remove('selected');
+                    o.querySelector('.option-marker').innerHTML = '';
+                });
+                opt.classList.add('selected');
+                opt.querySelector('.option-marker').innerHTML = '<i data-lucide="check" style="color: white; width: 14px; height: 14px;"></i>';
+                lucide.createIcons();
+            });
+        });
+
+        document.querySelectorAll('.conf-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.conf-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            });
+        });
+    </script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Twin - KnowledgeDecay AI</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/knowledge-twin.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <div class="mobile-brand">
+                <i data-lucide="brain-circuit" class="brand-icon"></i>
+                KnowledgeDecay
+            </div>
+            <button class="btn-ghost"><i data-lucide="bell"></i></button>
+        </header>
+
+        <!-- Desktop Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i data-lucide="brain-circuit" class="brand-icon"></i>
+                KnowledgeDecay
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="dashboard.html"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="subjects.html"><i data-lucide="book-open"></i> Subjects</a></li>
+                <li class="nav-item"><a href="quiz.html"><i data-lucide="zap"></i> Quiz</a></li>
+                <li class="nav-item"><a href="knowledge-twin.html" class="active"><i data-lucide="orbit"></i> Knowledge Twin</a></li>
+                <li class="nav-item"><a href="tomorrows-brain.html"><i data-lucide="calendar-clock"></i> Tomorrow's Brain</a></li>
+                <li class="nav-item"><a href="analytics.html"><i data-lucide="bar-chart-2"></i> Analytics</a></li>
+                <li class="nav-item"><a href="settings.html"><i data-lucide="settings"></i> Settings</a></li>
+                <li class="nav-item" style="margin-top: 16px;">
+                    <a href="#" onclick="if(window.StateManager) window.StateManager.resetDemoState(); window.location.reload(); return false;" style="color: var(--status-amber);">
+                        <i data-lucide="refresh-cw"></i> Reset Demo Data
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px;">
+                <div>
+                    <h1 class="greeting">Your Knowledge Twin</h1>
+                    <p class="subtitle">A living model of your knowledge.</p>
+                </div>
+                <a href="knowledge-twin-3d.html" class="btn btn-outline">
+                    <i data-lucide="box"></i> Explore in 3D <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- HERO SECTION -->
+            <div class="kt-hero" id="kt-hero-container">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- DIMENSIONS GRID -->
+            <div class="dimensions-section">
+                <div class="dimensions-grid" id="kt-dimensions-container">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- CONFIDENCE GAP -->
+            <div class="confidence-gap-section" id="kt-confidence-gap">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- CONCEPT MAP -->
+            <div class="concept-map-section">
+                <div class="concept-map-header">
+                    <h2>Concept Knowledge Map</h2>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+                        <div class="filters" id="kt-filters">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="strong">Strong</button>
+                            <button class="filter-btn" data-filter="fading">Fading</button>
+                            <button class="filter-btn" data-filter="fragile">Fragile</button>
+                            <button class="filter-btn" data-filter="critical">Critical</button>
+                        </div>
+                        <div class="search-bar">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="concept-search" placeholder="Search concepts...">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="concept-list" id="kt-concept-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+        </main>
+        
+        <!-- Mobile Bottom Nav -->
+        <nav class="mobile-bottom-nav">
+            <a href="dashboard.html" class="mobile-nav-item"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
+            <a href="quiz.html" class="mobile-nav-item"><i data-lucide="zap"></i><span>Quiz</span></a>
+            <a href="knowledge-twin.html" class="mobile-nav-item active"><i data-lucide="orbit"></i><span>Twin</span></a>
+            <a href="tomorrows-brain.html" class="mobile-nav-item"><i data-lucide="calendar-clock"></i><span>Plan</span></a>
+        </nav>
+    </div>
+
+    <!-- CONCEPT DETAIL MODAL -->
+    <div class="modal-overlay" id="concept-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <div id="modal-subject" class="text-muted text-sm" style="margin-bottom: 4px;">Subject</div>
+                    <h2 id="modal-title" style="font-size: 1.5rem;">Concept Name</h2>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: center;">
+                    <div id="modal-state-badge" class="badge">State</div>
+                    <button class="modal-close" id="modal-close-btn"><i data-lucide="x"></i></button>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Timeline Section (Full width above columns) -->
+                <div style="margin-bottom: 24px;">
+                    <h3 class="modal-section-title">Knowledge Timeline</h3>
+                    <div id="modal-timeline" style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+                    <!-- Left Column -->
+                    <div class="modal-col">
+                        <h3 class="modal-section-title">Metrics</h3>
+                        <div class="modal-metrics" id="modal-metrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+                            <!-- Populated by JS -->
+                        </div>
+                        
+                        <h3 class="modal-section-title">Decay Prediction</h3>
+                        
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px;">
+                            <span style="font-size: 0.85rem; font-weight: 500;">Simulate Recommended Intervention</span>
+                            <label class="switch" style="position: relative; display: inline-block; width: 40px; height: 20px;">
+                                <input type="checkbox" id="modal-sim-toggle" style="opacity: 0; width: 0; height: 0;">
+                                <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--card-border); transition: .4s; border-radius: 34px;"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="decay-chart-container">
+                            <canvas id="modalDecayChart"></canvas>
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right; margin-top: 8px;">Illustrative model estimate — not a guaranteed outcome.</div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="modal-col">
+                        
+                        <h3 class="modal-section-title">Why this state?</h3>
+                        <div class="diagnostic-box" id="modal-reason-box" style="margin-bottom: 24px; padding: 16px; border-radius: var(--border-radius-sm); border-left: 3px solid; background: rgba(255,255,255,0.02);">
+                            <ul id="modal-diagnostic-list" style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; display: flex; flex-direction: column; gap: 8px;">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                        
+                        <h3 class="modal-section-title">What to do next</h3>
+                        <div class="intervention-box" style="border: 1px solid var(--card-border); border-radius: var(--border-radius-sm); padding: 16px;">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <i data-lucide="lightbulb" class="text-blue"></i>
+                                <div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;" id="modal-intervention-title">Intervention</div>
+                                    <div class="text-muted" style="font-size: 0.9rem; margin-bottom: 16px;" id="modal-intervention-desc">Description</div>
+                                    <a href="quiz.html" class="btn btn-primary" id="modal-quiz-btn" style="width: 100%; display: flex; justify-content: center;">Start Intervention</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/knowledgeTwinData.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/knowledge-twin.js"></script>
+</body>
+</html>

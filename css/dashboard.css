@@ -1,0 +1,305 @@
+/* Dashboard Specific Styles */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+}
+
+.greeting {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+}
+
+/* Card Headers */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Hero Card (Knowledge Health) */
+.hero-card {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+}
+
+.health-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.health-score-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.health-score {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+}
+.health-score span {
+    font-size: 2rem;
+    color: var(--text-muted);
+}
+
+.health-trend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+.health-trend i {
+    width: 18px;
+    height: 18px;
+}
+
+.health-stats {
+    display: flex;
+    gap: 32px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 16px 24px;
+    border-radius: var(--border-radius-md);
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.stat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.dot-green { background-color: var(--status-green); box-shadow: 0 0 10px var(--status-green); }
+.dot-amber { background-color: var(--status-amber); box-shadow: 0 0 10px var(--status-amber); }
+.dot-red { background-color: var(--status-red); box-shadow: 0 0 10px var(--status-red); }
+
+.chart-container {
+    flex: 1;
+    min-height: 200px;
+    position: relative;
+    width: 100%;
+}
+
+/* Tomorrow's Brain */
+.tb-card {
+    grid-column: span 4;
+}
+
+.tb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tb-item {
+    padding: 16px;
+    border-radius: var(--border-radius-md);
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--card-border);
+    border-left-width: 4px;
+}
+
+.tb-item.critical { border-left-color: var(--status-red); }
+.tb-item.warning { border-left-color: var(--status-amber); }
+.tb-item.good { border-left-color: var(--status-green); }
+
+.tb-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+.tb-item-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+.tb-item-action {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.tb-item-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Knowledge Twin */
+.kt-card {
+    grid-column: span 4;
+}
+
+.kt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.kt-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kt-item-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Knowledge Gaps */
+.gaps-card {
+    grid-column: span 4;
+}
+
+.gaps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.gap-item {
+    background: rgba(255,255,255,0.03);
+    padding: 16px;
+    border-radius: var(--border-radius-sm);
+}
+
+.gap-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.gap-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+}
+.gap-stat-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Recent Performance */
+.performance-card {
+    grid-column: span 4;
+}
+
+.perf-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.perf-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--card-border);
+}
+.perf-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.perf-score {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: rgba(255,255,255,0.05);
+}
+.perf-details {
+    flex: 1;
+}
+.perf-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+.perf-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+    .hero-card { grid-column: span 12; }
+    .tb-card { grid-column: span 6; }
+    .kt-card { grid-column: span 6; }
+    .gaps-card { grid-column: span 6; }
+    .performance-card { grid-column: span 6; }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .tb-card, .kt-card, .gaps-card, .performance-card {
+        grid-column: span 12;
+    }
+    .health-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+    .health-stats {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .stat-item {
+        padding: 12px;
+        flex: 1;
+    }
+}
